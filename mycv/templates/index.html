@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My CV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+
+  <header>
+    <img src="{% static 'photo.jpg' %}" alt="My Photo">
+    <div class="info">
+      <h1>{{ person.fullName }}</h1>
+      <p>Email: <a href="mailto:{{ person.email }}">{{ person.email }}</a></p>
+      <p>LinkedIn: <a href="{{ person.linkedin_profile}}" target="_blank">linkedin.com</a></p>
+    </div>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>{{ person.description.first.text }}</p>
+  </section>
+
+  <section id="achievements">
+    <h2>Key Achievements</h2>
+    <ul>
+      {% for k in person.achivements.all %}
+      <li>{{ k.description }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section id="techstack">
+    <h2>Tech Stack & Skills</h2>
+    <p>
+      {% for s in person.skills.all %}
+        <strong>{{ s.name }}:</strong>
+        {{ s.getProficiencyLabel }}
+        {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  </section>
+
+  <section id="experience">
+    <h2>Work Experience</h2>
+    {% for exp in person.experiences.all %}
+      <div {% if not forloop.first %}class="fade-in"{% endif %}>
+        <strong>{{ exp.job_title }} – {{ exp.company }}</strong> ({{ exp.start_date|date:"Y-M" }} – {% if exp.end_date %}{{ exp.end_date|date:"Y-M" }}{% else %}Present{% endif %})
+        <ul>
+          {% for resp in exp.getResponsibilitiesList %}
+          <li>{{ resp }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+    <span class="toggle-btn">Show More</span>
+  </section>
+
+  <section id="objective">
+    <h2>Career Objective</h2>
+    <p>{{ person.careerobjectives.first.text }}</p>
+  </section>
+
+  <script>
+    $(document).ready(function() {
+      $(".toggle-btn").click(function() {
+        $(".fade-in").slideToggle(500);
+        const text = $(this).text() === "Show More" ? "Show Less" : "Show More";
+        $(this).text(text);
+      });
+    });
+  </script>
+
+</body>
+</html>
