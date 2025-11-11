@@ -7,6 +7,6 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/app
 COPY . .
 
-RUN pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
+RUN pip install -r requirements.txt && python manage.py collectstatic --noinput
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "mycv.wsgi:application"]
