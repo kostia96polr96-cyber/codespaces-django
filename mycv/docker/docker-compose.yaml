@@ -5,15 +5,19 @@ services:
             context: ..
             dockerfile: ./docker/app/Dockerfile
         container_name: app
+        env_file:
+          - ../../.env
+        volumes:
+            - ../../db.sqlite3:/var/www/app/db.sqlite3
         expose:
             - "8000"
     nginx:
         image: nginx:latest
         container_name: nginx
         ports:
-            - "8092:8001"
+            - "8090:80"
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
             - ../static:/usr/src/app/static
         depends_on:
             - app
