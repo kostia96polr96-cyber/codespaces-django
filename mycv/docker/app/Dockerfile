@@ -1,4 +1,4 @@
-FROM Python:3.11-slim
+FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y \
     sqlite3 \
@@ -7,6 +7,6 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/app
 COPY . .
 
-RUN python manage.py collectstatic --noinput
+RUN pip install -r requirements.txt && python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "mycv.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "mycv.wsgi:application"]
