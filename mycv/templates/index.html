@@ -7,12 +7,21 @@
   <title>My CV</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="{% static 'main.css' %}">
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <script src="{% static 'main.js' %}"></script>
 </head>
 <body>
 
   <header>
     <img src="{% static 'photo.jpg' %}" alt="My Photo">
+    <div class="theme-toggle">
+      <input type="checkbox" id="theme-switch">
+      <label for="theme-switch">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun">☀️</span>
+        <span class="slider"></span>
+      </label>
+    </div>
     <div class="info">
       <h1>{{ person.fullName }}</h1>
       <p>Email: <a href="mailto:{{ person.email }}">{{ person.email }}</a></p>
