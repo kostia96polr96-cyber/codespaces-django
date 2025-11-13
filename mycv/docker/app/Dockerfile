@@ -9,6 +9,4 @@ COPY . .
 
 RUN pip install -r requirements.txt && python manage.py collectstatic --noinput
 
-RUN chmod -R 755 mycv/staticfiles/
-
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "mycv.wsgi:application"]
