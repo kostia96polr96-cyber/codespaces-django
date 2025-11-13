@@ -9,4 +9,6 @@ COPY . .
 
 RUN pip install -r requirements.txt && python manage.py collectstatic --noinput
 
+RUN chown -R 755 staticfiles/
+
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "mycv.wsgi:application"]
