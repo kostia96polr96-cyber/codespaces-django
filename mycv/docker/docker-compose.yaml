@@ -10,6 +10,7 @@ services:
         volumes:
             - ../../db.sqlite3:/var/www/app/db.sqlite3
             - ../staticfiles:/var/www/app/mycv/staticfiles
+        user: "33:33"
         expose:
             - "8000"
     nginx:
